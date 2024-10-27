@@ -30,15 +30,15 @@ let booster = try Booster(
 try booster.train(
     iterations: 2,
     trainingData: train,
-    evaluationData: [train, test]
-) { _, _, evaluation, _ in
-    // Note: `evaluation` will be `nil`, if `evaluationData` are not provided.
-    print("Training logloss:", evaluation![train.name]!["logloss"]!)
-    print("Training error:", evaluation![train.name]!["error"]!)
-    print("Testing logloss:", evaluation![test.name]!["logloss"]!)
-    print("Testing error:", evaluation![test.name]!["error"]!)
-    print("---")
+    evaluationData: [train, test],
+    afterIteration: { _, _, evaluation, _ in
+        print("Training logloss:", evaluation![train.name]!["logloss"]!)
+        print("Training error:", evaluation![train.name]!["error"]!)
+        print("Testing logloss:", evaluation![test.name]!["logloss"]!)
+        print("Testing error:", evaluation![test.name]!["error"]!)
+        print("---")
 
-    // Note: This callback can return `.stop` to break training loop.
-    return .next
-}
+        // Note: This callback can return `.stop` to break training loop.
+        return .next
+    }
+)

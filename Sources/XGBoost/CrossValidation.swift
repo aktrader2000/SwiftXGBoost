@@ -246,7 +246,7 @@ public func crossValidationTraining(
         var stopped = 0
         var iterationEvaluations = [Evaluation]()
 
-        for (index, fold) in folds.enumerated() {
+        for (_, fold) in folds.enumerated() {
             try fold.booster.train(
                 iterations: iteration + 1,
                 startIteration: iteration,

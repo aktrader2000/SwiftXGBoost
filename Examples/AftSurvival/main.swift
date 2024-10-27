@@ -68,12 +68,13 @@ let booster = try Booster(
 try booster.train(
     iterations: 10000,
     trainingData: trainingData,
-    evaluationData: [trainingData, validationData]
-) { _, iteration, evaluation, _ in
-    print("Traning stats at \(iteration): \(evaluation!["training"]!)")
-    print("Validation stats at \(iteration): \(evaluation!["validation"]!)")
-    return .next
-}
+    evaluationData: [trainingData, validationData],
+    afterIteration: { _, iteration, evaluation, _ in
+        print("Traning stats at \(iteration): \(evaluation!["training"]!)")
+        print("Validation stats at \(iteration): \(evaluation!["validation"]!)")
+        return .next
+    }
+)
 
 let predicted = try booster.predict(
     from: validationData

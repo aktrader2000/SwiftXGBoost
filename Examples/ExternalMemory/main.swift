@@ -31,8 +31,9 @@ let booster = try Booster(
 try booster.train(
     iterations: 2,
     trainingData: train,
-    evaluationData: [train, test]
-) { _, iteration, evaluation, _ in
-    print(iteration, ":", evaluation!)
-    return .next
-}
+    evaluationData: [train, test],
+    afterIteration: { _, iteration, evaluation, _ in
+        print(iteration, ":", evaluation!)
+        return .next
+    }
+)
